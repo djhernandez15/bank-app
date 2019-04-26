@@ -31,5 +31,6 @@ app.use(
 
 //Endpoints
 app.post("/api/register", authController.registerUser);
+app.post("/api/login", authController.loginUser);
 
 app.listen(SERVER_PORT, () => console.log(`Listening on Port ${SERVER_PORT}`));

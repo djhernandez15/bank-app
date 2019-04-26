@@ -23,7 +23,8 @@ module.exports = {
                 .then(() => {
                   req.session.user = {
                     username,
-                    email
+                    email,
+                    balance: 0
                   };
                   //send the user
                   res.status(200).json(req.session.user);
@@ -34,5 +35,38 @@ module.exports = {
         }
       })
       .catch(err => console.log(err));
+  },
+  loginUser: (req, res) => {
+    //get username and password off of req.body
+    const { username, password } = req.body;
+    //get the database
+    const db = req.app.get("db");
+    //find the user with that username
+    db.verifyUser([username]).then(user => {
+      if (user.length > 0) {
+        //user has brackets because the data is an array with object in it. Access array index then dot notation to access property inside object
+        bcrypt.compare(password, user[0].password).then(doesMatch => {
+          if (doesMatch) {
+            req.session.user = {
+              username: user[0].username,
+              email: user[0].email,
+              balance: user[0].balance
+            };
+            res.status(200).json(req.session.user);
+          } else {
+            res.status(403).json({
+              error: "USERNAME_OR_PASSWORD_INCORRECT"
+            });
+          }
+        });
+      } else {
+        res.status(404).json({
+          error: "USER_DOES_NOT_EXIST"
+        });
+      }
+    }).catch(err => console.log(err));
+    //check to make sure the passwords match
+    //put them on the session
+    //send response
   }
 };
