@@ -3,6 +3,9 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import { updateUser } from "../../ducks/reducer";
 import { connect } from "react-redux";
+import { Button, KIND } from "baseui/button";
+import { Block } from "baseui/block";
+import {StatefulInput} from 'baseui/input';
 
 export class Register extends Component {
   constructor() {
@@ -54,17 +57,19 @@ export class Register extends Component {
       <div>
         Register
         <br />
-        <input onChange={this.handleUsername} placeholder="Username" />
+        <StatefulInput onChange={this.handleUsername} placeholder="Username" />
         <br />
-        <input
+        <StatefulInput
           type="password"
           onChange={this.handlePassword}
           placeholder="Password"
         />
         <br />
-        <input onChange={this.handleEmail} placeholder="Email" />
+        <StatefulInput onChange={this.handleEmail} placeholder="Email" />
         <br />
-        <button onClick={this.handleClick}>Register</button>
+        <Button onClick={this.handleClick}>Register</Button>
+        <Block as="span" marginLeft="scale300" />
+        {/* <button onClick={this.handleClick}>Register</button> */}
       </div>
     );
   }

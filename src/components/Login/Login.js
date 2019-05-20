@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
+import { styled } from "baseui";
+import { StatefulInput } from "baseui/input";
+import { Button, KIND } from "baseui/button";
+import { Block } from "baseui/block";
+import { LightTheme, ThemeProvider } from "baseui";
 
 export class Login extends Component {
   constructor() {
@@ -38,23 +43,30 @@ export class Login extends Component {
       return <Redirect to="/profile" />;
     }
     return (
-      <div>
-        Login
-        <br />
-        <input onChange={this.handleUsername} placeholder="Username" />
-        <br />
-        <input
-          type="password"
-          onChange={this.handlePassword}
-          placeholder="Password"
-          onKeyPress={this.handleEnter}
-        />
-        <br />
-        <button onClick={this.handleClick}>Log In</button>
-        <h3>
-          Don't have an account? <Link to="register">Register</Link> Today!
-        </h3>
-      </div>
+      <ThemeProvider theme={LightTheme}>
+        <div>
+          Login
+          <br />
+          <StatefulInput
+            onChange={this.handleUsername}
+            placeholder="Username"
+          />
+          <br />
+          <StatefulInput
+            type="password"
+            onChange={this.handlePassword}
+            placeholder="Password"
+            onKeyPress={this.handleEnter}
+          />
+          <br />
+          <Button onClick={this.handleClick}>Log In</Button>
+          <Block as="span" marginLeft="scale300" />
+          {/* <button onClick={this.handleClick}>Log In</button> */}
+          <h3>
+            Don't have an account? <Link to="register">Register</Link> Today!
+          </h3>
+        </div>
+      </ThemeProvider>
     );
   }
 }
